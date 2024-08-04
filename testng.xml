@@ -1,0 +1,26 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Component Tests" parallel="instances" thread-count="2" annotations="JDK">
+<!--    <listeners>-->
+<!--        <listener class-name=""/>-->
+<!--    </listeners>-->
+    <test name="TestSuite">
+
+
+        <parameter name="browser" value="chrome"/>
+        <parameter name="Port" value="9001"/>
+        <!--        <groups>-->
+        <!--            <run>-->
+        <!--                <include name="password" />-->
+        <!--                <include name="labels" />-->
+        <!--            </run>-->
+        <!--        </groups>-->
+<!--        <classes>-->
+<!--            <class name="RegistrationTest"/>-->
+<!--            <class name="HomePageTest"/>-->
+<!--            <class name="SignInTest"/>-->
+<!--            <class name="MyAccountTest"/>-->
+<!--        </classes>-->
+    </test>
+
+
+</suite>
