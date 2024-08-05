@@ -4,7 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import Constants.ErrorMessages;
+import Constants.Messages;
 import Constants.Urls;
 import Constants.UserData;
 import Pages.SignUpLogin;
@@ -37,7 +37,7 @@ public class SignUpLoginTest extends BaseTest {
     public void  registerUserWithExistingEmail() {
         Assert.assertTrue(signUpLogin.checkSignUpFormVisibility());
         signUpLogin.registerUser("test", "test@mail.com");
-        Assert.assertEquals(signUpLogin.getRegisterErrorMessage(), ErrorMessages.getExitingEmailErrorMessage());
+        Assert.assertEquals(signUpLogin.getRegisterErrorMessage(), Messages.getExitingEmailErrorMessage());
     }
 
 
@@ -54,6 +54,6 @@ public class SignUpLoginTest extends BaseTest {
     public void LoginUserWithIncorrectData(){
         Assert.assertTrue(signUpLogin.checkLoginFormVisibility());
         signUpLogin.login("incorrectEmail@mail.com", "incorrectPassword");
-        Assert.assertEquals(signUpLogin.getLoginErrorMessage(), ErrorMessages.getIncorrectLoginDataErrorMessage());
+        Assert.assertEquals(signUpLogin.getLoginErrorMessage(), Messages.getIncorrectLoginDataErrorMessage());
     }
 }

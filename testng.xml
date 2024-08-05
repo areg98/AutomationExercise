@@ -16,6 +16,7 @@
         <!--        </groups>-->
         <classes>
             <class name="SignUpLoginTest"/>
+            <class name="ContactUsTest"/>
         </classes>
     </test>
 

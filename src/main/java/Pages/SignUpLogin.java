@@ -18,7 +18,14 @@ import java.time.Duration;
 import Constants.UserData;
 
 public class SignUpLogin extends BasePage {
+
     private WebDriver driver;
+
+    public SignUpLogin(WebDriver driver) {
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
+    }
+
 
     @FindBy(css = "button[data-qa = \"signup-button\"]")
     private WebElement signupButton;
@@ -95,10 +102,7 @@ public class SignUpLogin extends BasePage {
     @FindBy(xpath = "//*[@id=\"form\"]/div/div/div[1]/div/form/p")
     private WebElement loginErrorMessage;
 
-    public SignUpLogin(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
-    }
+
 
     public boolean checkSignUpFormVisibility() {
         return signupForm.isDisplayed() ? true : false;
