@@ -14,12 +14,9 @@
         <!--                <include name="labels" />-->
         <!--            </run>-->
         <!--        </groups>-->
-<!--        <classes>-->
-<!--            <class name="RegistrationTest"/>-->
-<!--            <class name="HomePageTest"/>-->
-<!--            <class name="SignInTest"/>-->
-<!--            <class name="MyAccountTest"/>-->
-<!--        </classes>-->
+        <classes>
+            <class name="SignUpLoginTest"/>
+        </classes>
     </test>
 
 

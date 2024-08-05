@@ -2,6 +2,8 @@ package Pages;
 
 import static Constants.Urls.*;
 import static Utils.CustomWebDriver.getDriver;
+import static Utils.CustomWebDriver.setDriver;
+import static Utils.CustomWebElement.*;
 import static Utils.WaitHelper.waitUntilElementAppeared;
 
 import org.openqa.selenium.WebDriver;
@@ -12,6 +14,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+
+import Constants.UserData;
 
 public class SignUpLogin extends BasePage {
     private WebDriver driver;
@@ -26,25 +30,21 @@ public class SignUpLogin extends BasePage {
     private WebElement signupName;
     @FindBy(css = "input[data-qa=\"signup-email\"]")
     private WebElement signupEmail;
-    @FindBy(className = "login-form")
-    private WebElement loginForm;
     @FindBy(id = "id_gender1")
     private WebElement titleRadio;
     @FindBy(css = "input[data-qa=\"name\"]")
     private WebElement nameFiled;
-    @FindBy(id  = "email")
+    @FindBy(id = "email")
     private WebElement emailFiled;
     @FindBy(css = "input[data-qa=\"password\"]")
     private WebElement passwordFiled;
     @FindBy(css = "select[data-qa=\"days\"]")
     private WebElement daysOption;
-
     @FindBy(css = "select[data-qa=\"months\"]")
     private WebElement monthsOption;
     @FindBy(css = "select[data-qa=\"years\"]")
     private WebElement yearsOption;
-
-    @FindBy(id  = "newsletter")
+    @FindBy(id = "newsletter")
     private WebElement newsletterCheckBox;
     @FindBy(id = "optin")
     private WebElement optinCheckBox;
@@ -80,77 +80,108 @@ public class SignUpLogin extends BasePage {
     private WebElement deleteAccountButton;
     @FindBy(css = "h2[data-qa=\"account-deleted\"]")
     private WebElement accountDeletedText;
+    @FindBy(className = "login-form")
+    private WebElement loginForm;
+    @FindBy(css = "input[data-qa=\"login-email\"]")
+    private WebElement loginEmailFiled;
+    @FindBy(css = "input[data-qa=\"login-password\"]")
+    private WebElement loginPasswordFiled;
+    @FindBy(css = "button[data-qa=\"login-button\"]")
+    private WebElement loginButton;
+    @FindBy(className = "fa-lock")
+    private WebElement logoutButton;
+    @FindBy(xpath = "//*[@id=\"form\"]/div/div/div[3]/div/form/p")
+    private WebElement registerErrorMessage;
+    @FindBy(xpath = "//*[@id=\"form\"]/div/div/div[1]/div/form/p")
+    private WebElement loginErrorMessage;
 
-    public SignUpLogin(WebDriver driver){
+    public SignUpLogin(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
-    public boolean checkSignUpFormVisibility(){
-        return signupForm.isDisplayed()? true : false;
+    public boolean checkSignUpFormVisibility() {
+        return signupForm.isDisplayed() ? true : false;
     }
 
     public boolean checkLoginFormVisibility(){
         return loginForm.isDisplayed()? true : false;
     }
 
-    public boolean checkAccountCreatedTextVisibility(){
-        return accountCreatedText.isDisplayed()? true : false;
+    public boolean checkAccountCreatedTextVisibility() {
+        return accountCreatedText.isDisplayed() ? true : false;
     }
 
-    public boolean checkAccountDeletedTextVisibility(){
-        return accountDeletedText.isDisplayed()? true : false;
+    public boolean checkAccountDeletedTextVisibility() {
+        return accountDeletedText.isDisplayed() ? true : false;
     }
 
-    public boolean checkLoggedInTextVisibility(){
-        return loggedInText.isDisplayed()? true : false;
+    public boolean checkLoggedInTextVisibility() {
+        return loggedInText.isDisplayed() ? true : false;
     }
 
-    public String getLoggedInText(){
-        return loggedInText.getText();
+    public String getLoggedInText() {
+        return getText(loggedInText);
     }
 
-    public void clickOnContinueButton(){
-        continueButton.click();
+    public void clickOnContinueButton() {
+        click(continueButton);
     }
 
-    public void clickOnDeleteAccountButton(){
-        deleteAccountButton.click();
+    public void clickOnDeleteAccountButton() {
+        click(deleteAccountButton);
     }
 
-    public void reisterUser(){
-        signupName.sendKeys("Anun");
-        signupEmail.sendKeys("name@mail.ru");
-        signupButton.click();
+    public void login(String email, String password){
+        sendKey(loginEmailFiled, email);
+        sendKey(loginPasswordFiled, password);
+        click(loginButton);
     }
 
-    public void fillDetalis(){
+    public void logout(){
+        click(logoutButton);
+    }
+
+    public String getLoginErrorMessage(){
+        return getText(loginErrorMessage);
+    }
+
+    public String getRegisterErrorMessage(){
+        return getText(registerErrorMessage);
+    }
+
+    public void registerUser(String name, String email) {
+        sendKey(signupName, name);
+        sendKey(signupEmail, email);
+        click(signupButton);
+    }
+
+    public void fillDetalis() {
         Select day = new Select(daysOption);
         Select month = new Select(monthsOption);
         Select years = new Select(yearsOption);
         Select country = new Select(countryOption);
 
 
-        titleRadio.click();
-        nameFiled.clear();
-        nameFiled.sendKeys("name");
-        passwordFiled.sendKeys("123456");
+        click(titleRadio);
+        sendKey(nameFiled, "name");
+        sendKey(passwordFiled, "123456");
         day.selectByIndex(5);
         month.selectByIndex(3);
         years.selectByIndex(12);
-        newsletterCheckBox.click();
-        optinCheckBox.click();
-        firstnameFiled.sendKeys("Arsen");
-        lastnameFiled.sendKeys("Beno");
-        companyFiled.sendKeys("Gexi Club");
-        addressFiled.sendKeys("Hovtashen");
-        address2Filed.sendKeys("gexi glux");
+        click(newsletterCheckBox);
+        click(optinCheckBox);
+        sendKey(firstnameFiled, "Arsen");
+        sendKey(lastnameFiled, "Beno");
+        sendKey(companyFiled, "Gexi Club");
+        sendKey(addressFiled, "Hovtashen");
+        sendKey(address2Filed, "gexi glux");
         country.selectByVisibleText("Canada");
-        stateFiled.sendKeys("Aragatsotn");
-        cityFiled.sendKeys("Abaran");
-        zipcodeFiled.sendKeys("0050");
-        mobileNumberFiled.sendKeys("+37494568925");
-        createAccountButton.click();
+        sendKey(stateFiled, "Aragatsotn");
+        sendKey(cityFiled, "Abaran");
+        sendKey(zipcodeFiled, "0050");
+        sendKey(mobileNumberFiled, "+37494568925");
+        click(createAccountButton);
     }
 
 
@@ -162,9 +193,9 @@ public class SignUpLogin extends BasePage {
     @Override
     protected void isLoaded() throws Error {
         super.isLoaded();
-        try{
+        try {
             waitUntilElementAppeared(signupForm);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new Error();
         }
 
