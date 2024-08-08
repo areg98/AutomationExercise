@@ -17,6 +17,11 @@
         <classes>
             <class name="SignUpLoginTest"/>
             <class name="ContactUsTest"/>
+            <class name="CartTest"/>
+            <class name="HomePageTest"/>
+            <class name="TestCasesTest"/>
+            <class name="ProductsTest"/>
+
         </classes>
     </test>
 

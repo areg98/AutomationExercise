@@ -11,7 +11,7 @@ import org.openqa.selenium.interactions.Actions;
 
 public class CustomWebElement {
 
-    public static void click(WebElement element) {  // Todo check
+    public static void click(WebElement element) {
         waitUntilElementToBeClickable(element);
         element.click();
     }

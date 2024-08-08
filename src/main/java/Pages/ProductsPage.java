@@ -1,7 +1,12 @@
 package Pages;
 
 import static Constants.Urls.PRODUCTS_PAGE_URL;
+import static Utils.CustomWebDriver.getDriver;
 import static Utils.CustomWebElement.click;
+import static Utils.CustomWebElement.getText;
+import static Utils.CustomWebElement.hover;
+import static Utils.CustomWebElement.printError;
+import static Utils.CustomWebElement.printInfo;
 import static Utils.WaitHelper.waitUntilElementAppeared;
 
 import org.openqa.selenium.WebDriver;
@@ -36,12 +41,56 @@ public class ProductsPage extends BasePage {
     private static WebElement productCondition;
     @FindBy(xpath = "/html/body/section/div/div/div[2]/div[2]/div[2]/div/p[4]")
     private static WebElement productBrand;
+    @FindBy(className = "col-sm-4")
+    private List<WebElement> productsList;
+    @FindBy(className = "productinfo")
+    private List<WebElement> productInfoList;
+    @FindBy(xpath = "/html/body/section[2]/div/div/div[2]/div/div[2]/div/div[1]/div[2]/div/a")
+    private WebElement firstAddToCartButton;
+    @FindBy(xpath = "/html/body/section[2]/div/div/div[2]/div/div[3]/div/div[1]/div[2]/div/a")
+    private WebElement secondAddToCartButton;
+    @FindBy(xpath = "//*[@id=\"cartModal\"]/div/div/div[3]/button")
+    private WebElement continueShoppingButton;
+    @FindBy(xpath = "//*[@id=\"cartModal\"]/div/div/div[2]/p[2]/a/u")
+    private WebElement viewCartButton;
 
     public void openProductDetails() {
         Random random = new Random();
         click(viewProductsList.get(random.nextInt(0, viewProductsList.size())));
     }
 
+    public void addToCart(int index) {
+        hover(getDriver(), productsList.get(index));
+        switch (index){
+            case 1:
+                click(firstAddToCartButton);
+                break;
+            case 2:
+                click(secondAddToCartButton);
+                break;
+            default:
+                printError("no such index");
+                break;
+        }
+    }
+
+    public String getProductPrice(int index){
+        return getText(productInfoList.get(index)).substring(0,7);
+    }
+
+    public String getProductName(int index){
+        String productInfo = getText(productInfoList.get(index));
+        return productInfo.substring(8, productInfo.length()-11);
+    }
+
+    public void clickOnContinueShoppingButton() {
+        click(continueShoppingButton);
+    }
+
+
+    public void clickOnViewCart() {
+        click(viewCartButton);
+    }
 
     @Override
     protected String getUrl() {
@@ -68,20 +117,23 @@ public class ProductsPage extends BasePage {
             return productCategory.isDisplayed();
         }
 
-        public boolean checkProductPriceVisibility(){
+        public boolean checkProductPriceVisibility() {
             return productPrice.isDisplayed();
         }
 
-        public boolean checkProductAvailabilityVisibility(){
+        public boolean checkProductAvailabilityVisibility() {
             return productAvailability.isDisplayed();
         }
 
-        public boolean checkProductConditionVisibility(){
+        public boolean checkProductConditionVisibility() {
             return productCondition.isDisplayed();
         }
 
-        public boolean checkProductBrandVisibility(){
+        public boolean checkProductBrandVisibility() {
             return productBrand.isDisplayed();
         }
+
     }
+
+
 }
