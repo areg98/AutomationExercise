@@ -6,15 +6,15 @@ import org.testng.annotations.Test;
 
 import Constants.Messages;
 import Constants.Urls;
-import Pages.ContactUs;
+import Pages.ContactUsPage;
 
 public class ContactUsTest extends BaseTest{
 
-    ContactUs contactUs;
+    ContactUsPage contactUs;
 
     @BeforeMethod
     public void init(){
-        contactUs = new ContactUs(getDriver());
+        contactUs = new ContactUsPage(getDriver());
         contactUs.open();
     }
 

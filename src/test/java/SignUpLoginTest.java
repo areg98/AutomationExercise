@@ -7,23 +7,27 @@ import org.testng.annotations.Test;
 import Constants.Messages;
 import Constants.Urls;
 import Constants.UserData;
-import Pages.SignUpLogin;
+import Pages.Header;
+import Pages.SignUpLoginPage;
 
 public class SignUpLoginTest extends BaseTest {
 
-    SignUpLogin signUpLogin;
+    SignUpLoginPage signUpLogin;
+    Header header;
+    UserData userData;
 
     @BeforeMethod
     public void init() {
-        signUpLogin = new Pages.SignUpLogin(getDriver());
+        signUpLogin = new SignUpLoginPage(getDriver());
+        header = new Header(getDriver());
+        userData = new UserData();
         signUpLogin.open();
     }
 
     @Test
     public void registerUser() {
-        Assert.assertTrue(signUpLogin.checkSignUpFormVisibility());
-        signUpLogin.registerUser("name", "name@mail.ru");
-        Assert.assertTrue(signUpLogin.checkSignUpFormVisibility());
+        signUpLogin.registerUser("name", "name@mail.com");
+        Assert.assertTrue(signUpLogin.checkLoginFormVisibility());
         signUpLogin.fillDetalis();
         Assert.assertTrue(signUpLogin.checkAccountCreatedTextVisibility());
         signUpLogin.clickOnContinueButton();
@@ -44,9 +48,10 @@ public class SignUpLoginTest extends BaseTest {
     @Test
     public void LoginUserWithCorrectData(){
         Assert.assertTrue(signUpLogin.checkLoginFormVisibility());
-        signUpLogin.login(UserData.getEmail(), UserData.getPassword());
+
+        signUpLogin.login(userData.getEMAIL(), userData.getPASSWORD());
         Assert.assertTrue(signUpLogin.checkLoggedInTextVisibility());
-        signUpLogin.logout();
+        header.clickOnLogout();
         Assert.assertEquals(getDriver().getCurrentUrl(), Urls.LOGIN_URL);
     }
 

@@ -1,7 +1,7 @@
 package Pages;
 
 import static Constants.Urls.CONTACT_US_URL;
-import static Constants.Urls.LOGIN_URL;
+import static Constants.Urls.PRODUCTS_PAGE_URL;
 import static Utils.CustomWebDriver.getDriver;
 import static Utils.CustomWebElement.*;
 import static Utils.WaitHelper.waitUntilElementAppeared;
@@ -13,12 +13,13 @@ import org.openqa.selenium.support.PageFactory;
 
 import Constants.UserData;
 
-public class ContactUs extends BasePage {
+public class ContactUsPage extends BasePage {
 
-    WebDriver driver;
+    UserData userData;
 
-    public ContactUs(WebDriver driver) {
-        this.driver = driver;
+    public ContactUsPage(WebDriver driver) {
+        super(driver);
+        userData = new UserData();
         PageFactory.initElements(driver, this);
     }
 
@@ -41,31 +42,32 @@ public class ContactUs extends BasePage {
 
 
     public boolean checkContactUsFormVisibility() {
-        return contactUsForm.isDisplayed() ? true : false;
+        return contactUsForm.isDisplayed();
     }
 
-    public void sendMessage(){
-        sendKey(nameFiled, UserData.getNAME());
-        sendKey(emailFiled, UserData.getEmail());
+    public void sendMessage() {
+        sendKey(nameFiled, userData.getNAME());
+        sendKey(emailFiled, userData.getEMAIL());
         sendKey(subjectFiled, "something");
         sendKey(messageFiled, "some message");
         click(submitButton);
         getDriver().switchTo().alert().accept();
     }
 
-    public void clickOnHomeButton(){
+    public void clickOnHomeButton() {
         click(homeButton);
     }
 
-    public String getSuccessMessageText(){
+    public String getSuccessMessageText() {
         return getText(successMessage);
     }
 
 
     @Override
-    protected void load() {
-        driver.navigate().to(CONTACT_US_URL);
+    protected String getUrl() {
+        return CONTACT_US_URL;
     }
+
 
     @Override
     protected void isLoaded() throws Error {

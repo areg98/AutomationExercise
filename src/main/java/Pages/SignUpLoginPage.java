@@ -1,8 +1,6 @@
 package Pages;
 
 import static Constants.Urls.*;
-import static Utils.CustomWebDriver.getDriver;
-import static Utils.CustomWebDriver.setDriver;
 import static Utils.CustomWebElement.*;
 import static Utils.WaitHelper.waitUntilElementAppeared;
 
@@ -11,18 +9,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
+public class SignUpLoginPage extends BasePage {
 
-import Constants.UserData;
 
-public class SignUpLogin extends BasePage {
-
-    private WebDriver driver;
-
-    public SignUpLogin(WebDriver driver) {
-        this.driver = driver;
+    public SignUpLoginPage(WebDriver driver) {
+        super(driver);
         PageFactory.initElements(driver, this);
     }
 
@@ -95,8 +87,6 @@ public class SignUpLogin extends BasePage {
     private WebElement loginPasswordFiled;
     @FindBy(css = "button[data-qa=\"login-button\"]")
     private WebElement loginButton;
-    @FindBy(className = "fa-lock")
-    private WebElement logoutButton;
     @FindBy(xpath = "//*[@id=\"form\"]/div/div/div[3]/div/form/p")
     private WebElement registerErrorMessage;
     @FindBy(xpath = "//*[@id=\"form\"]/div/div/div[1]/div/form/p")
@@ -105,23 +95,23 @@ public class SignUpLogin extends BasePage {
 
 
     public boolean checkSignUpFormVisibility() {
-        return signupForm.isDisplayed() ? true : false;
+        return signupForm.isDisplayed();
     }
 
     public boolean checkLoginFormVisibility(){
-        return loginForm.isDisplayed()? true : false;
+        return loginForm.isDisplayed();
     }
 
     public boolean checkAccountCreatedTextVisibility() {
-        return accountCreatedText.isDisplayed() ? true : false;
+        return accountCreatedText.isDisplayed();
     }
 
     public boolean checkAccountDeletedTextVisibility() {
-        return accountDeletedText.isDisplayed() ? true : false;
+        return accountDeletedText.isDisplayed();
     }
 
     public boolean checkLoggedInTextVisibility() {
-        return loggedInText.isDisplayed() ? true : false;
+        return loggedInText.isDisplayed();
     }
 
     public String getLoggedInText() {
@@ -142,9 +132,7 @@ public class SignUpLogin extends BasePage {
         click(loginButton);
     }
 
-    public void logout(){
-        click(logoutButton);
-    }
+
 
     public String getLoginErrorMessage(){
         return getText(loginErrorMessage);
@@ -190,9 +178,10 @@ public class SignUpLogin extends BasePage {
 
 
     @Override
-    protected void load() {
-        driver.navigate().to(LOGIN_URL);
+    protected String getUrl() {
+        return LOGIN_URL;
     }
+
 
     @Override
     protected void isLoaded() throws Error {
