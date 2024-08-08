@@ -6,4 +6,5 @@ public class Urls {
     public static String CONTACT_US_URL = BASE_URL + "contact_us";
     public static String TEST_CASES_PAGE_URL = BASE_URL + "test_cases";
     public static String PRODUCTS_PAGE_URL = BASE_URL + "products";
+    public static String CART_PAGE_URL = BASE_URL + "view_cart";
 }

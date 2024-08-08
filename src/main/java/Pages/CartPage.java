@@ -1,7 +1,6 @@
 package Pages;
 
-import static Constants.Urls.BASE_URL;
-import static Utils.CustomWebElement.*;
+import static Constants.Urls.CART_PAGE_URL;
 import static Utils.WaitHelper.waitUntilElementAppeared;
 
 import org.openqa.selenium.WebDriver;
@@ -9,34 +8,28 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import Constants.UserData;
+public class CartPage extends BasePage {
 
-public class HomePage extends BasePage {
+    @FindBy(className = "breadcrumbs")
+    private WebElement shoppingCartText;
 
-    @FindBy(className = "carousel-inner")
-    private WebElement adSlide;
-
-
-
-    UserData userData;
-
-    public HomePage(WebDriver driver) {
+    public CartPage(WebDriver driver){
         super(driver);
-        userData = new UserData();
         PageFactory.initElements(driver, this);
     }
 
 
+
     @Override
     protected String getUrl() {
-        return BASE_URL;
+        return CART_PAGE_URL;
     }
 
     @Override
     protected void isLoaded() throws Error {
         super.isLoaded();
         try {
-            waitUntilElementAppeared(adSlide);
+            waitUntilElementAppeared(shoppingCartText);
         } catch (Exception e) {
             throw new Error();
         }

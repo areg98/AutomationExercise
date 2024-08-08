@@ -15,12 +15,14 @@ public class SignUpLoginTest extends BaseTest {
     SignUpLoginPage signUpLogin;
     Header header;
     UserData userData;
+    Messages messages;
 
     @BeforeMethod
     public void init() {
         signUpLogin = new SignUpLoginPage(getDriver());
         header = new Header(getDriver());
         userData = new UserData();
+        messages = new Messages();
         signUpLogin.open();
     }
 
@@ -41,7 +43,7 @@ public class SignUpLoginTest extends BaseTest {
     public void  registerUserWithExistingEmail() {
         Assert.assertTrue(signUpLogin.checkSignUpFormVisibility());
         signUpLogin.registerUser("test", "test@mail.com");
-        Assert.assertEquals(signUpLogin.getRegisterErrorMessage(), Messages.getExitingEmailErrorMessage());
+        Assert.assertEquals(signUpLogin.getRegisterErrorMessage(), messages.getEXITING_EMAIL_ERROR_MESSAGE());
     }
 
 
@@ -59,6 +61,6 @@ public class SignUpLoginTest extends BaseTest {
     public void LoginUserWithIncorrectData(){
         Assert.assertTrue(signUpLogin.checkLoginFormVisibility());
         signUpLogin.login("incorrectEmail@mail.com", "incorrectPassword");
-        Assert.assertEquals(signUpLogin.getLoginErrorMessage(), Messages.getIncorrectLoginDataErrorMessage());
+        Assert.assertEquals(signUpLogin.getLoginErrorMessage(), messages.getINCORRECT_LOGIN_DATA_ERROR_MESSAGE());
     }
 }
