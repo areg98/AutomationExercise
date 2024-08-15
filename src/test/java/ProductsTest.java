@@ -1,11 +1,13 @@
 import static Utils.CustomWebDriver.getDriver;
 import static Utils.CustomWebElement.printInfo;
 
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import Pages.CartPage;
+import Pages.Header;
 import Pages.ProductsPage;
 import Pages.ProductsPage.ProductDetails;
 
@@ -14,12 +16,14 @@ public class ProductsTest extends BaseTest{
     ProductsPage productsPage;
     ProductDetails productDetails;
     CartPage cartPage;
+    Header header;
 
     @BeforeMethod
     public void init(){
         productsPage = new ProductsPage(getDriver());
         cartPage = new CartPage(getDriver());
         productDetails = new ProductDetails();
+        header = new Header(getDriver());
         productsPage.open();
     }
 
@@ -52,6 +56,16 @@ public class ProductsTest extends BaseTest{
         softAssert.assertEquals(cartPage.getProductPrice(0), productPrice1);
         softAssert.assertEquals(cartPage.getProductPrice(1), productPrice2);
         softAssert.assertAll();
+    }
+
+    @Test
+     public void verifyProductQuantity(){
+        productsPage.openProductDetails();
+        productDetails.setQuantity("4");
+        productDetails.clickOnAddToCartButton();
+        productsPage.clickOnViewCart();
+        Assert.assertEquals(cartPage.getProductQuantity(), "4");
+
     }
 
 }

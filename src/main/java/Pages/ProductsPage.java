@@ -7,6 +7,7 @@ import static Utils.CustomWebElement.getText;
 import static Utils.CustomWebElement.hover;
 import static Utils.CustomWebElement.printError;
 import static Utils.CustomWebElement.printInfo;
+import static Utils.CustomWebElement.sendKey;
 import static Utils.WaitHelper.waitUntilElementAppeared;
 
 import org.openqa.selenium.WebDriver;
@@ -53,6 +54,10 @@ public class ProductsPage extends BasePage {
     private WebElement continueShoppingButton;
     @FindBy(xpath = "//*[@id=\"cartModal\"]/div/div/div[2]/p[2]/a/u")
     private WebElement viewCartButton;
+    @FindBy(id = "quantity")
+    private static WebElement productQuantity;
+    @FindBy(xpath = "/html/body/section/div/div/div[2]/div[2]/div[2]/div/span/button")
+    private static WebElement addToCartButton;
 
     public void openProductDetails() {
         Random random = new Random();
@@ -131,6 +136,14 @@ public class ProductsPage extends BasePage {
 
         public boolean checkProductBrandVisibility() {
             return productBrand.isDisplayed();
+        }
+
+        public void setQuantity(String quantity){
+            sendKey(productQuantity, quantity);
+        }
+
+        public void clickOnAddToCartButton(){
+            click(addToCartButton);
         }
 
     }

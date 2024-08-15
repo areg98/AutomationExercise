@@ -28,7 +28,7 @@ public class SignUpLoginTest extends BaseTest {
 
     @Test
     public void registerUser() {
-        signUpLogin.registerUser("name", "name@mail.com");
+        signUpLogin.registerUser("name", "name010@mail.com");
         Assert.assertTrue(signUpLogin.checkLoginFormVisibility());
         signUpLogin.fillDetalis();
         Assert.assertTrue(signUpLogin.checkAccountCreatedTextVisibility());
@@ -50,7 +50,6 @@ public class SignUpLoginTest extends BaseTest {
     @Test
     public void LoginUserWithCorrectData(){
         Assert.assertTrue(signUpLogin.checkLoginFormVisibility());
-
         signUpLogin.login(userData.getEMAIL(), userData.getPASSWORD());
         Assert.assertTrue(signUpLogin.checkLoggedInTextVisibility());
         header.clickOnLogout();

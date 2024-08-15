@@ -19,6 +19,8 @@ public class CartPage extends BasePage {
     private List<WebElement> productNameList;
     @FindBy(className = "cart_price")
     private List<WebElement> productPriceList;
+    @FindBy(className = "cart_quantity")
+    private WebElement productQuantity;
 
     public CartPage(WebDriver driver){
         super(driver);
@@ -31,6 +33,10 @@ public class CartPage extends BasePage {
 
     public String getProductPrice(int index){
         return getText(productPriceList.get(index));
+    }
+
+    public String getProductQuantity(){
+        return getText(productQuantity);
     }
 
 
