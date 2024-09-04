@@ -7,22 +7,31 @@ import org.testng.annotations.Test;
 import Constants.Messages;
 import Constants.Urls;
 import Constants.UserData;
+import Pages.CartPage;
 import Pages.Header;
+import Pages.Payment;
+import Pages.ProductsPage;
 import Pages.SignUpLoginPage;
 
 public class SignUpLoginTest extends BaseTest {
 
     SignUpLoginPage signUpLogin;
     Header header;
+    ProductsPage productsPage;
+    CartPage cartPage;
     UserData userData;
     Messages messages;
+    Payment payment;
 
     @BeforeMethod
     public void init() {
         signUpLogin = new SignUpLoginPage(getDriver());
         header = new Header(getDriver());
+        productsPage = new ProductsPage(getDriver());
+        cartPage = new CartPage(getDriver());
         userData = new UserData();
         messages = new Messages();
+        payment = new Payment(getDriver());
         signUpLogin.open();
     }
 
@@ -62,4 +71,35 @@ public class SignUpLoginTest extends BaseTest {
         signUpLogin.login("incorrectEmail@mail.com", "incorrectPassword");
         Assert.assertEquals(signUpLogin.getLoginErrorMessage(), messages.getINCORRECT_LOGIN_DATA_ERROR_MESSAGE());
     }
+
+
+//    ToDo : Test Case 14
+    @Test
+    public void placeOrderRegWhileCheckout(){
+        header.clickOnHome();
+        productsPage.addToCart(1);
+        productsPage.clickOnViewCart();
+        Assert.assertTrue(cartPage.shoppingCartTextVisibility());
+        cartPage.clickOnCheckoutButton();
+        cartPage.clickOnRegLoginButton();
+        signUpLogin.registerUser("name", "name015@mail.com");
+        signUpLogin.fillDetalis();
+        signUpLogin.clickOnContinueButton();
+        Assert.assertTrue(signUpLogin.checkLoggedInTextVisibility());
+        header.clickOnCart();
+        cartPage.clickOnProceedCheckoutButton();
+        cartPage.enterTextInCommentTextbox("some comment");
+        cartPage.clickOnPlaceOrderButton();
+        payment.fillCardInfo();
+        payment.clickOnPayButton();
+        Assert.assertTrue(payment.checkOrderPlacedTextVisibility());
+        signUpLogin.clickOnDeleteAccountButton();
+        Assert.assertTrue(signUpLogin.checkAccountDeletedTextVisibility());
+
+
+
+
+    }
+
+
 }

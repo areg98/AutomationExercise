@@ -4,8 +4,6 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.Objects;
-
 import Constants.Messages;
 import Pages.Footer;
 import Pages.HomePage;
