@@ -54,10 +54,17 @@ public class ProductsPage extends BasePage {
     private WebElement continueShoppingButton;
     @FindBy(xpath = "//*[@id=\"cartModal\"]/div/div/div[2]/p[2]/a/u")
     private WebElement viewCartButton;
+    @FindBy(id = "search_product")
+    private WebElement searchInput;
+    @FindBy(id = "submit_search")
+    private WebElement searchButton;
+    @FindBy(xpath = "//div[@class = 'single-products']")
+    private WebElement searchResult;
     @FindBy(id = "quantity")
     private static WebElement productQuantity;
     @FindBy(xpath = "/html/body/section/div/div/div[2]/div[2]/div[2]/div/span/button")
     private static WebElement addToCartButton;
+
 
     public void openProductDetails() {
         Random random = new Random();
@@ -79,6 +86,7 @@ public class ProductsPage extends BasePage {
         }
     }
 
+
     public String getProductPrice(int index){
         return getText(productInfoList.get(index)).substring(0,7);
     }
@@ -95,6 +103,15 @@ public class ProductsPage extends BasePage {
 
     public void clickOnViewCart() {
         click(viewCartButton);
+    }
+
+    public void searchProduct(String text){
+        sendKey(searchInput, text);
+        click(searchButton);
+    }
+
+    public boolean checkSearchResultVisibility(){
+        return searchResult.isDisplayed();
     }
 
     @Override

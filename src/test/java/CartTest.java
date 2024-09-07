@@ -22,6 +22,7 @@ public class CartTest extends BaseTest {
         cartPage.open();
     }
 
+    /** Test Case 11 **/
     @Test
     public void subscribe(){
         Assert.assertTrue(footer.checkSubscribeFormVisibility());

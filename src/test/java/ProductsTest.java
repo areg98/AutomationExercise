@@ -11,7 +11,7 @@ import Pages.Header;
 import Pages.ProductsPage;
 import Pages.ProductsPage.ProductDetails;
 
-public class ProductsTest extends BaseTest{
+public class ProductsTest extends BaseTest {
 
     ProductsPage productsPage;
     ProductDetails productDetails;
@@ -19,7 +19,7 @@ public class ProductsTest extends BaseTest{
     Header header;
 
     @BeforeMethod
-    public void init(){
+    public void init() {
         productsPage = new ProductsPage(getDriver());
         cartPage = new CartPage(getDriver());
         productDetails = new ProductDetails();
@@ -27,8 +27,11 @@ public class ProductsTest extends BaseTest{
         productsPage.open();
     }
 
+    /**
+     * Test Case 8
+     **/
     @Test
-    public void checkProductDetails(){
+    public void checkProductDetails() {
         SoftAssert softAssert = new SoftAssert();
         productsPage.openProductDetails();
         softAssert.assertTrue(productDetails.checkProductNameVisibility());
@@ -40,8 +43,20 @@ public class ProductsTest extends BaseTest{
         softAssert.assertAll();
     }
 
+    /**
+     * Test Case 9
+     **/
     @Test
-    public void addProductsInCart(){
+    public void searchProduct() {
+        productsPage.searchProduct("Premium Polo T-Shirts");
+        Assert.assertTrue(productsPage.checkSearchResultVisibility());
+    }
+
+    /**
+     * Test Case 12
+     **/
+    @Test
+    public void addProductsInCart() {
         String productPrice1 = productsPage.getProductPrice(0);
         String productPrice2 = productsPage.getProductPrice(1);
         String productName1 = productsPage.getProductName(0);
@@ -58,8 +73,11 @@ public class ProductsTest extends BaseTest{
         softAssert.assertAll();
     }
 
+    /**
+     * Test Case 13
+     **/
     @Test
-     public void verifyProductQuantity(){
+    public void verifyProductQuantity() {
         productsPage.openProductDetails();
         productDetails.setQuantity("4");
         productDetails.clickOnAddToCartButton();

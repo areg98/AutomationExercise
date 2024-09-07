@@ -22,6 +22,7 @@ public class HomePageTest extends BaseTest{
         homePage.open();
     }
 
+    /** Test Case 10 **/
     @Test
     public void subscribe(){
         Assert.assertTrue(footer.checkSubscribeFormVisibility());

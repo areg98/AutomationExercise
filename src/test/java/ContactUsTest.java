@@ -20,6 +20,7 @@ public class ContactUsTest extends BaseTest{
         contactUs.open();
     }
 
+    /** Test Case 6 **/
     @Test
     public void ContactUsForm(){
         Assert.assertTrue(contactUs.checkContactUsFormVisibility());

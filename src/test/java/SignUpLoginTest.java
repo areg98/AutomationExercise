@@ -35,6 +35,7 @@ public class SignUpLoginTest extends BaseTest {
         signUpLogin.open();
     }
 
+    /** Test Case 1 **/
     @Test
     public void registerUser() {
         signUpLogin.registerUser("name", "name010@mail.com");
@@ -48,16 +49,9 @@ public class SignUpLoginTest extends BaseTest {
         signUpLogin.clickOnContinueButton();
     }
 
+    /** Test Case 2 **/
     @Test
-    public void  registerUserWithExistingEmail() {
-        Assert.assertTrue(signUpLogin.checkSignUpFormVisibility());
-        signUpLogin.registerUser("test", "test@mail.com");
-        Assert.assertEquals(signUpLogin.getRegisterErrorMessage(), messages.getEXITING_EMAIL_ERROR_MESSAGE());
-    }
-
-
-    @Test
-    public void LoginUserWithCorrectData(){
+    public void LoginUserWithCorrectData() {
         Assert.assertTrue(signUpLogin.checkLoginFormVisibility());
         signUpLogin.login(userData.getEMAIL(), userData.getPASSWORD());
         Assert.assertTrue(signUpLogin.checkLoggedInTextVisibility());
@@ -65,17 +59,25 @@ public class SignUpLoginTest extends BaseTest {
         Assert.assertEquals(getDriver().getCurrentUrl(), Urls.LOGIN_URL);
     }
 
+    /** Test Case 3 **/
     @Test
-    public void LoginUserWithIncorrectData(){
+    public void LoginUserWithIncorrectData() {
         Assert.assertTrue(signUpLogin.checkLoginFormVisibility());
         signUpLogin.login("incorrectEmail@mail.com", "incorrectPassword");
         Assert.assertEquals(signUpLogin.getLoginErrorMessage(), messages.getINCORRECT_LOGIN_DATA_ERROR_MESSAGE());
     }
 
-
-//    ToDo : Test Case 14
+    /** Test Case 5 **/
     @Test
-    public void placeOrderRegWhileCheckout(){
+    public void registerUserWithExistingEmail() {
+        Assert.assertTrue(signUpLogin.checkSignUpFormVisibility());
+        signUpLogin.registerUser("test", "test@mail.com");
+        Assert.assertEquals(signUpLogin.getRegisterErrorMessage(), messages.getEXITING_EMAIL_ERROR_MESSAGE());
+    }
+
+    /** Test Case 14 **/
+    @Test
+    public void placeOrderRegWhileCheckout() {
         header.clickOnHome();
         productsPage.addToCart(1);
         productsPage.clickOnViewCart();
@@ -95,11 +97,5 @@ public class SignUpLoginTest extends BaseTest {
         Assert.assertTrue(payment.checkOrderPlacedTextVisibility());
         signUpLogin.clickOnDeleteAccountButton();
         Assert.assertTrue(signUpLogin.checkAccountDeletedTextVisibility());
-
-
-
-
     }
-
-
 }

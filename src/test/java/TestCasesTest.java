@@ -15,6 +15,7 @@ public class TestCasesTest extends BaseTest{
         testCasesPage.open();
     }
 
+    /** Test Case 7 **/
     @Test
     public void checkTestCasesPage(){
         Assert.assertTrue(testCasesPage.checkTestCasesContainerVisibility());
