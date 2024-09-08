@@ -1,5 +1,6 @@
 package Pages;
 
+import static Constants.Urls.BASE_URL;
 import static Constants.Urls.PRODUCTS_PAGE_URL;
 import static Utils.CustomWebDriver.getDriver;
 import static Utils.CustomWebElement.click;
@@ -9,14 +10,32 @@ import static Utils.CustomWebElement.printError;
 import static Utils.CustomWebElement.printInfo;
 import static Utils.CustomWebElement.sendKey;
 import static Utils.WaitHelper.waitUntilElementAppeared;
+import static Utils.ApiSpecification.*;
+import static io.restassured.RestAssured.given;
 
+import com.google.gson.JsonObject;
+
+import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.json.Json;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 import java.util.Random;
+
+import Utils.ApiSpecification;
+import io.restassured.RestAssured;
+import io.restassured.filter.Filter;
+import io.restassured.http.ContentType;
+import io.restassured.internal.RestAssuredResponseOptionsImpl;
+import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
+import pojo.Products;
+import pojo.Root;
 
 public class ProductsPage extends BasePage {
 
@@ -66,6 +85,17 @@ public class ProductsPage extends BasePage {
     private static WebElement addToCartButton;
 
 
+    public void getAllProductsList() {
+
+        List<Products> products = new ApiSpecification().get("api/productsList")
+                .then()
+                .extract().body().jsonPath().getList("data.products", Products.class);
+
+        printInfo(products.get(0).id);
+
+
+    }
+
     public void openProductDetails() {
         Random random = new Random();
         click(viewProductsList.get(random.nextInt(0, viewProductsList.size())));
@@ -73,7 +103,7 @@ public class ProductsPage extends BasePage {
 
     public void addToCart(int index) {
         hover(getDriver(), productsList.get(index));
-        switch (index){
+        switch (index) {
             case 1:
                 click(firstAddToCartButton);
                 break;
@@ -87,13 +117,13 @@ public class ProductsPage extends BasePage {
     }
 
 
-    public String getProductPrice(int index){
-        return getText(productInfoList.get(index)).substring(0,7);
+    public String getProductPrice(int index) {
+        return getText(productInfoList.get(index)).substring(0, 7);
     }
 
-    public String getProductName(int index){
+    public String getProductName(int index) {
         String productInfo = getText(productInfoList.get(index));
-        return productInfo.substring(8, productInfo.length()-11);
+        return productInfo.substring(8, productInfo.length() - 11);
     }
 
     public void clickOnContinueShoppingButton() {
@@ -105,12 +135,12 @@ public class ProductsPage extends BasePage {
         click(viewCartButton);
     }
 
-    public void searchProduct(String text){
+    public void searchProduct(String text) {
         sendKey(searchInput, text);
         click(searchButton);
     }
 
-    public boolean checkSearchResultVisibility(){
+    public boolean checkSearchResultVisibility() {
         return searchResult.isDisplayed();
     }
 
@@ -155,11 +185,11 @@ public class ProductsPage extends BasePage {
             return productBrand.isDisplayed();
         }
 
-        public void setQuantity(String quantity){
+        public void setQuantity(String quantity) {
             sendKey(productQuantity, quantity);
         }
 
-        public void clickOnAddToCartButton(){
+        public void clickOnAddToCartButton() {
             click(addToCartButton);
         }
 
